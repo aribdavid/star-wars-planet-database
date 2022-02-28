@@ -7,7 +7,7 @@ import Filter from './components/Filter';
 function App() {
   const [planetsData, setData] = useState([]);
   const [filterPlanets, filterData] = useState('');
-  const [info, filterInfo] = useState();
+  const [info, filterInfo] = useState([]);
   const [filter, toggleFilter] = useState(false);
 
   const contextValue = {
@@ -18,6 +18,7 @@ function App() {
     filterInfo,
     filter,
     toggleFilter,
+    info,
   };
 
   useEffect(() => {
