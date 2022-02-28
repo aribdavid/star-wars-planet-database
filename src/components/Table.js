@@ -11,16 +11,16 @@ function Table() {
 
   useEffect(() => {
     const flibs = () => {
-      if (filter && filterByNumericValues[0].comparison === 'maior que') {
-        const { column, number } = filterByNumericValues[0];
+      if (filter && filterByNumericValues.comparison === 'maior que') {
+        const { column, number } = filterByNumericValues;
         setResults(planetsData
           .filter((elem) => Number(elem[column]) > number));
-      } else if (filter && filterByNumericValues[0].comparison === 'menor que') {
-        const { column, number } = filterByNumericValues[0];
+      } else if (filter && filterByNumericValues.comparison === 'menor que') {
+        const { column, number } = filterByNumericValues;
         setResults(planetsData
           .filter((elem) => Number(elem[column]) < number));
-      } else if (filter && filterByNumericValues[0].comparison === 'igual a') {
-        const { column, number } = filterByNumericValues[0];
+      } else if (filter && filterByNumericValues.comparison === 'igual a') {
+        const { column, number } = filterByNumericValues;
         setResults(planetsData
           .filter((elem) => Number(elem[column]) === Number(number)));
       } else {

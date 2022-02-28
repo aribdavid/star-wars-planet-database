@@ -2,17 +2,16 @@ import React, { useContext } from 'react';
 import mainContext from '../context/mainContext';
 
 function ActiveFilters() {
-  const { filterByNumericValues, filter } = useContext(mainContext);
+  const { filterByNumericValues, filter, filterInfo } = useContext(mainContext);
 
   return (
     filter
     && (
       <div>
-        <h1>Kleber</h1>
-        <ol>
+        <ul>
           {
             filterByNumericValues.map((current, index) => (
-              <li key={ index }>
+              <li data-testid="filter" key={ index }>
                 column:
                 {' '}
                 {current.column}
@@ -24,10 +23,28 @@ function ActiveFilters() {
                 number:
                 {current.number}
                 {' '}
+                <button
+                  type="button"
+                  onClick={ () => {
+                    filterInfo((prevInfo) => [...prevInfo
+                      .filter((elem) => elem.column !== current.column)]);
+                  } }
+                >
+                  X
+                </button>
               </li>
             ))
           }
-        </ol>
+        </ul>
+        <button
+          data-testid="button-remove-filters"
+          type="button"
+          onClick={ () => {
+            filterInfo([]);
+          } }
+        >
+          Remover todas filtragens
+        </button>
       </div>
     )
   );

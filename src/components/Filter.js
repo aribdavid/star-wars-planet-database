@@ -1,10 +1,10 @@
 import React, { useContext, useState } from 'react';
 import mainContext from '../context/mainContext';
-import ActiveFilters from './ActiveFilters';
+
 import InputName from './InputName';
 
 function Filter() {
-  const { filterInfo, toggleFilter } = useContext(mainContext);
+  const { filterInfo, toggleFilter, filter, filterByNumericValues } = useContext(mainContext);
   const [column, columnHandler] = useState('population');
   const [comparison, operatorHandler] = useState('maior que');
   const [number, inputHandler] = useState(0);
@@ -13,7 +13,49 @@ function Filter() {
 
   return (
     <header>
-      <ActiveFilters />
+      {filter
+    && (
+      <div>
+        <ul>
+          {
+            filterByNumericValues.map((current, index) => (
+              <li data-testid="filter" key={ index }>
+                column:
+                {' '}
+                {current.column}
+                {' | '}
+                comparison:
+                {' '}
+                {current.comparison}
+                {' | '}
+                number:
+                {current.number}
+                {' '}
+                <button
+                  type="button"
+                  onClick={ () => {
+                    filterInfo((prevInfo) => [...prevInfo
+                      .filter((elem) => elem.column !== current.column)]);
+                    setOptions((prevOptions) => [...prevOptions, current.column]);
+                  } }
+                >
+                  X
+                </button>
+              </li>
+            ))
+          }
+        </ul>
+        <button
+          data-testid="button-remove-filters"
+          type="button"
+          onClick={ () => {
+            filterInfo([]);
+          } }
+        >
+          Remover todas filtragens
+        </button>
+      </div>
+    )}
       <InputName />
       <select
         data-testid="column-filter"
