@@ -1,17 +1,17 @@
 import React, { useContext } from 'react';
 import mainContext from '../context/mainContext';
 
-function Input() {
+function InputName() {
   const { filterData } = useContext(mainContext);
   return (
     <input
       data-testid="name-filter"
       type="text"
-      onChange={ (event) => {
-        filterData(event.target.value);
+      onChange={ ({ target }) => {
+        filterData(target.value);
       } }
     />
   );
 }
 
-export default Input;
+export default InputName;

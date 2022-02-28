@@ -1,8 +1,35 @@
-import React, { useContext } from 'react';
+import React, { useContext, useEffect, useState } from 'react';
 import mainContext from '../context/mainContext';
 
 function Table() {
-  const { planetsData, filterByName } = useContext(mainContext);
+  const { planetsData,
+    filterByName,
+    filterByNumericValues,
+    filter } = useContext(mainContext);
+
+  const [results, setResults] = useState([]);
+
+  useEffect(() => {
+    const flibs = () => {
+      if (filter && filterByNumericValues.comparison === 'maior que') {
+        const { column, number } = filterByNumericValues;
+        setResults(planetsData
+          .filter((elem) => Number(elem[column]) > number));
+      } else if (filter && filterByNumericValues.comparison === 'menor que') {
+        const { column, number } = filterByNumericValues;
+        setResults(planetsData
+          .filter((elem) => Number(elem[column]) < number));
+      } else if (filter && filterByNumericValues.comparison === 'igual a') {
+        const { column, number } = filterByNumericValues;
+        setResults(planetsData
+          .filter((elem) => Number(elem[column]) === Number(number)));
+      } else {
+        setResults(planetsData);
+      }
+    };
+    flibs();
+  }, [filter, filterByNumericValues, planetsData]);
+
   return (
     <table>
       <thead>
@@ -23,7 +50,8 @@ function Table() {
         </tr>
       </thead>
       <tbody>
-        {planetsData.filter((planet) => planet.name.includes(filterByName.name))
+        {results
+          .filter((planet) => planet.name.includes(filterByName.name))
           .map((planet) => (
             <tr key={ planet.name }>
               <td>{planet.name}</td>
@@ -40,7 +68,7 @@ function Table() {
               <td>{planet.edited}</td>
               <td>{planet.url}</td>
             </tr>
-          ))}
+          )) }
       </tbody>
     </table>
   );
