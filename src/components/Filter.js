@@ -4,7 +4,8 @@ import mainContext from '../context/mainContext';
 import InputName from './InputName';
 
 function Filter() {
-  const { filterInfo, toggleFilter, filter, filterByNumericValues } = useContext(mainContext);
+  const { filterInfo, toggleFilter,
+    filter, filterByNumericValues } = useContext(mainContext);
   const [column, columnHandler] = useState('population');
   const [comparison, operatorHandler] = useState('maior que');
   const [number, inputHandler] = useState(0);
