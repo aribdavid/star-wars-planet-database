@@ -4,13 +4,16 @@ import mainContext from '../context/mainContext';
 function InputName() {
   const { filterData } = useContext(mainContext);
   return (
-    <input
-      data-testid="name-filter"
-      type="text"
-      onChange={ ({ target }) => {
-        filterData(target.value);
-      } }
-    />
+    <>
+      <h3>Pesquisar</h3>
+      <input
+        data-testid="name-filter"
+        type="text"
+        onChange={ ({ target }) => {
+          filterData(target.value);
+        } }
+      />
+    </>
   );
 }
 

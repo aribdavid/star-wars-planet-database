@@ -33,8 +33,118 @@ function Filter() {
   };
 
   return (
-    <header>
-      {filter
+    <header className="header">
+      <h1>
+        Star Wars
+        {' '}
+        <br />
+        {' '}
+        Planet Database
+      </h1>
+      <nav id="showMe">
+        <InputName />
+        <h3>Filtros</h3>
+        <select
+          data-testid="column-filter"
+          onChange={ ({ target }) => columnHandler(target.value) }
+        >
+          {options.map((option, index) => (
+            <option key={ index } value={ option }>{option}</option>
+          ))}
+        </select>
+        <select
+          data-testid="comparison-filter"
+          onChange={ ({ target }) => operatorHandler(target.value) }
+        >
+          <option>maior que</option>
+          <option>menor que</option>
+          <option>igual a</option>
+
+        </select>
+        <input
+          data-testid="value-filter"
+          type="number"
+          value={ number }
+          onChange={ ({ target }) => inputHandler(target.value) }
+        />
+        <button
+          className="bn3637 bn36"
+          data-testid="button-filter"
+          type="button"
+          onClick={ () => {
+            filterInfo((prevFilters) => [...prevFilters,
+              { column, comparison, number }]);
+            toggleFilter(true);
+            setOptions((prevOptions) => [...prevOptions
+              .filter((option) => option !== column)]);
+          } }
+        >
+          Adicionar Filtro
+        </button>
+        <button
+          className="bt2 bn36"
+          data-testid="button-remove-filters"
+          type="button"
+          onClick={ () => {
+            filterInfo([]);
+          } }
+        >
+          Remover todas filtragens
+        </button>
+        <div>
+          <h3>Sort</h3>
+          <select
+            data-testid="column-sort"
+            id="select"
+            onChange={ ({ target }) => {
+              selectSort(target.value);
+            } }
+          >
+            <option>population</option>
+            <option>orbital_period</option>
+            <option>diameter</option>
+            <option>rotation_period</option>
+            <option>surface_water</option>
+          </select>
+          <label data-testid="column-sort-input-asc" htmlFor="ascending">
+            Ascending
+            <input
+              id="ascending"
+              name="sort"
+              value="ASC"
+              onChange={ ({ target }) => {
+                selectMethod(target.value);
+              } }
+              type="radio"
+            />
+          </label>
+          <label data-testid="column-sort-input-desc" htmlFor="descending">
+            Descending
+            <input
+              id="descending"
+              name="sort"
+              value="DESC"
+              type="radio"
+              onChange={ ({ target }) => {
+                selectMethod(target.value);
+              } }
+            />
+          </label>
+          <button
+            className="bn3637 bn36"
+            type="button"
+            data-testid="column-sort-button"
+            onClick={ () => {
+              setOrder({ order: { column: sort, sort: method } });
+              sortPlanets();
+            } }
+          >
+            Submit
+
+          </button>
+        </div>
+        <div>
+          {filter
     && (
       <div>
         <ul>
@@ -53,6 +163,7 @@ function Filter() {
                 {current.number}
                 {' '}
                 <button
+                  className="bt2 bn36"
                   type="button"
                   onClick={ () => {
                     filterInfo((prevInfo) => [...prevInfo
@@ -66,104 +177,11 @@ function Filter() {
             ))
           }
         </ul>
-        <button
-          data-testid="button-remove-filters"
-          type="button"
-          onClick={ () => {
-            filterInfo([]);
-          } }
-        >
-          Remover todas filtragens
-        </button>
       </div>
     )}
-      <InputName />
-      <select
-        data-testid="column-filter"
-        onChange={ ({ target }) => columnHandler(target.value) }
 
-      >
-        {options.map((option, index) => (
-          <option key={ index } value={ option }>{option}</option>
-        ))}
-      </select>
-      <select
-        data-testid="comparison-filter"
-        onChange={ ({ target }) => operatorHandler(target.value) }
-
-      >
-        <option>maior que</option>
-        <option>menor que</option>
-        <option>igual a</option>
-
-      </select>
-      <input
-        data-testid="value-filter"
-        type="number"
-        value={ number }
-        onChange={ ({ target }) => inputHandler(target.value) }
-      />
-      <button
-        data-testid="button-filter"
-        type="button"
-        onClick={ () => {
-          filterInfo((prevFilters) => [...prevFilters, { column, comparison, number }]);
-          toggleFilter(true);
-          setOptions((prevOptions) => [...prevOptions
-            .filter((option) => option !== column)]);
-        } }
-      >
-        Adicionar Filtro
-      </button>
-      <h3>Sort</h3>
-      <select
-        data-testid="column-sort"
-        id="select"
-        onChange={ ({ target }) => {
-          selectSort(target.value);
-        } }
-      >
-        <option>population</option>
-        <option>orbital_period</option>
-        <option>diameter</option>
-        <option>rotation_period</option>
-        <option>surface_water</option>
-      </select>
-      <label data-testid="column-sort-input-asc" htmlFor="ascending">
-        Ascending
-        <input
-          id="ascending"
-          name="sort"
-          value="ASC"
-          onChange={ ({ target }) => {
-            selectMethod(target.value);
-          } }
-          type="radio"
-        />
-      </label>
-      <label data-testid="column-sort-input-desc" htmlFor="descending">
-        Descending
-        <input
-          id="descending"
-          name="sort"
-          value="DESC"
-          type="radio"
-          onChange={ ({ target }) => {
-            selectMethod(target.value);
-          } }
-        />
-      </label>
-      <button
-        type="button"
-        data-testid="column-sort-button"
-        onClick={ () => {
-          setOrder({ order: { column: sort, sort: method } });
-          sortPlanets();
-        } }
-      >
-        Submit
-
-      </button>
+        </div>
+      </nav>
 
     </header>
   );

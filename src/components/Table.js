@@ -34,8 +34,8 @@ function Table() {
   }, [filter, filterByNumericValues, planetsData]);
 
   return (
-    <div>
-      <table>
+    <div className="main">
+      <table className="container">
         <thead>
           <tr>
             <th>Name</th>
